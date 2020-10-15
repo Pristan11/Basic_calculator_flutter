@@ -21,6 +21,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String output = "0";
+  String _output = "0";
+  double num1 = 0.0;
+  double num2 = 0.0;
+  String operand = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +43,20 @@ class _HomePageState extends State<HomePage> {
                 padding: EdgeInsets.all(10.0),
                 alignment: Alignment.bottomRight,
                 child: Text(
-                  text,
+                  output,
+                  style: TextStyle(
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.lightGreen),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.all(10.0),
+                alignment: Alignment.bottomRight,
+                child: Text(
+                  output,
                   style: TextStyle(
                       fontSize: 50.0,
                       fontWeight: FontWeight.w500,
@@ -97,42 +115,87 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  String res, text = "";
-  int first, second;
-  String oop;
-  void btnClicked(String btnText) {
-    if (btnText == "C") {
-      text = "";
-      res = "";
-      first = 0;
-      second = 0;
-    } else if (btnText == "+" ||
-        btnText == "-" ||
-        btnText == "*" ||
-        btnText == "/") {
-      first = int.parse(text);
-      res = "";
-      oop = btnText;
-    } else if (btnText == "=") {
-      second = int.parse(text);
-      if (oop == "+") {
-        res = (first + second).toString();
+  void btnClicked(String buttonText) {
+    if (buttonText == "C") {
+      _output = "0";
+      num1 = 0.0;
+      num2 = 0.0;
+      operand = "";
+    } else if (buttonText == "+" ||
+        buttonText == "-" ||
+        buttonText == "*" ||
+        buttonText == "/") {
+      num1 = double.parse(output);
+      operand = buttonText;
+      _output = "0";
+    }
+    //else if(buttonText =="."){
+    //   if(_output.contains("."){
+    //   print("already contains a decimals");
+    //   return;
+    //   } else{
+    //   _output =_output + buttonText;
+    //   }
+    //   }
+    else if (buttonText == "=") {
+      num2 = double.parse(output);
+      if (operand == "+") {
+        _output = (num1 + num2).toString();
       }
-      if (oop == "-") {
-        res = (first - second).toString();
+      if (operand == "-") {
+        _output = (num1 - num2).toString();
       }
-      if (oop == "*") {
-        res = (first * second).toString();
+      if (operand == "*") {
+        _output = (num1 + num2).toString();
       }
-      if (oop == "/") {
-        res = (first / second).toString();
+      if (operand == "/") {
+        _output = (num1 + num2).toString();
       }
+
+      num1 = 0.0;
+      num2 = 0.0;
+      operand = "";
     } else {
-      res = int.parse(text + btnText).toString();
+      _output = _output + buttonText;
     }
 
+    print(_output);
     setState(() {
-      text = res;
+      output = double.parse(_output).toStringAsFixed(2);
     });
   }
+
+  // if (btnText == "+") {
+  //     Number = int.parse(Pfirst);
+  //     total += Number;
+  //     res = "";
+  //     Number = 0;
+  //   } else if (btnText == "-") {
+  //     Number = int.parse(Pfirst);
+  //     total -= Number;
+  //     Pfirst = "";
+  //     Number = 0;
+  //   } else if (btnText == "*") {
+  //     Number = int.parse(Pfirst);
+  //     total *= Number;
+  //     Pfirst = "";
+  //     Number = 0;
+  //   } else if (btnText == "/") {
+  //     Number = int.parse(Pfirst);
+  //     total = (total / Number) as int;
+  //     Pfirst = "";
+  //     Number = 0;
+  //   } else if (btnText == "=") {
+  //     res = total.toString();
+  //   } else if (btnText == "C") {
+  //     total = 0;
+  //   res = "";
+  //   Number = 0;
+  // } else {
+  //   res = Pfirst + btnText;
+  // }
+  //
+  // setState(() {
+  //   Pfirst = res;
+  // });
 }
